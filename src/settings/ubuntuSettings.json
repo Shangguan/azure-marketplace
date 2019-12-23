@@ -110,10 +110,7 @@
     ],
     "ubuntuSettings": {
       "imageReference": {
-        "publisher": "Canonical",
-        "offer": "UbuntuServer",
-        "sku": "16.04.0-LTS",
-        "version": "latest"
+        "id": "/subscriptions/70bd6e77-4b1e-4835-8896-db77b8eef364/resourceGroups/ssh-rg/providers/Microsoft.Compute/images/myImage"
       },
       "managementPort": 22,
       "extensionSettings": {
