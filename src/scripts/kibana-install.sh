@@ -421,6 +421,9 @@ start_systemd()
 # Installation sequence
 #########################
 
+# sleep 5 minutes to avoid 'dpkg frontend is locked by another process' error
+sleep 5m
+
 # if kibana is already installed assume this is a redeploy
 # change yaml configuration and only restart the server when needed
 if systemctl -q is-active kibana.service; then
