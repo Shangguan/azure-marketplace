@@ -418,11 +418,23 @@ start_systemd()
 }
 
 #########################
-# Installation sequence
+# Helper Function
 #########################
 
-# sleep 5 minutes to avoid 'dpkg frontend is locked by another process' error
-sleep 5m
+# sleep when apt-get is unable to grab locks
+apt-get() {
+    i=0
+    while fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1 ; do
+        echo "Waiting for other software managers to release dpkg locks..." 
+        sleep 30s
+    done 
+
+    /usr/bin/apt-get "$@"
+}
+
+#########################
+# Installation sequence
+#########################
 
 # if kibana is already installed assume this is a redeploy
 # change yaml configuration and only restart the server when needed

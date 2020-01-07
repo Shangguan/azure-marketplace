@@ -142,6 +142,21 @@ if [[ $(dpkg --compare-versions "$LOGSTASH_VERSION" "ge" "7.1.0"; echo $?) -eq 0
 fi
 
 #########################
+# Helper Function
+#########################
+
+# sleep when apt-get is unable to grab locks
+apt-get() {
+    i=0
+    while fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1 ; do
+        echo "Waiting for other software managers to release dpkg locks..." 
+        sleep 30s
+    done 
+
+    /usr/bin/apt-get "$@"
+}
+
+#########################
 # Installation steps as functions
 #########################
 

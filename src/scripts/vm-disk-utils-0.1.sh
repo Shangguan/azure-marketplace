@@ -370,6 +370,21 @@ check_mdadm() {
   log "apt-get installed mdadm and can be found returns: ${?}"
 }
 
+#########################
+# Helper Function
+#########################
+
+# sleep when apt-get is unable to grab locks
+apt-get() {
+    i=0
+    while fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1 ; do
+        echo "Waiting for other software managers to release dpkg locks..." 
+        sleep 30s
+    done 
+
+    /usr/bin/apt-get "$@"
+}
+
 # Create Partitions
 DISKS=($(scan_for_new_disks))
 
