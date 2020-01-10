@@ -432,6 +432,15 @@ apt-get() {
     /usr/bin/apt-get "$@"
 }
 
+dpkg() {
+    while fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock /var/cache/apt/archives/lock >/dev/null 2>&1 ; do
+        echo "Waiting for other software managers to release dpkg locks..." 
+        sleep 30s
+    done 
+
+    /usr/bin/dpkg "$@"
+}
+
 #########################
 # Installation sequence
 #########################
