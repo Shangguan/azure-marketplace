@@ -2,6 +2,7 @@
 
 Easily deploy the Elastic Stack of Elasticsearch, Kibana and Logstash to Azure.
 
+
 This readme provides an overview of usage and features. For more comprehensive documentation, 
 please refer to the [**Azure Marketplace and ARM template documentation**](https://www.elastic.co/guide/en/elastic-stack-deploy/current/index.html)
 
